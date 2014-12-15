@@ -1,0 +1,8 @@
+*.bc
+*.instr
+*.trace
+*.db
+*.o
+*.swp
+*.txt
+*.json

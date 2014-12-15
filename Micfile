@@ -1,0 +1,39 @@
+OBJS = G0VProcess.o G0ProcessA.o G0ProcessB.o G0ProcessC.o G0Track.o G0TrackManager.o \
+       G0DumbStepSimulator.o
+G4INSTALL=/home/eisenloh/Geant4/geant4.10.00.p02
+INCLUDE=-I$(G4INSTALL)/source/externals/clhep/include
+CC = icpc
+G0SEQ_CFLAGS = $(CFLAGS) -mmic -O3 -Wall -c $(INCLUDE)
+LFLAGS = -Wall -mmic $(DEBUG)
+_RK4VECT=1
+
+g0seq : $(OBJS) g0seq.o
+	$(CC) $(LFLAGS) $(OBJS) g0seq.o -o g0seq
+
+g0seq.o : g0seq.cc
+	$(CC) $(G0SEQ_CFLAGS) g0seq.cc
+
+G0ProcessA.o : G0ProcessA.hh G0VProcess.hh G0ProcessA.cc
+	$(CC) $(G0SEQ_CFLAGS) G0ProcessA.cc
+
+G0ProcessB.o : G0ProcessB.hh G0VProcess.hh G0ProcessB.cc
+	$(CC) $(G0SEQ_CFLAGS) G0ProcessB.cc
+
+G0ProcessC.o : G0ProcessC.hh G0VProcess.hh G0ProcessC.cc
+	$(CC) $(G0SEQ_CFLAGS) G0ProcessC.cc
+
+G0VProcess.o : G0VProcess.hh G0VProcess.cc
+	$(CC) $(G0SEQ_CFLAGS) G0VProcess.cc
+
+G0Track.o : G0Track.hh G0VProcess.hh G0Track.cc 
+	$(CC) $(G0SEQ_CFLAGS) G0Track.cc
+
+G0TrackManager.o : G0TrackManager.hh G0Track.hh G0TrackManager.cc 
+	$(CC) $(G0SEQ_CFLAGS) G0TrackManager.cc
+
+G0DumbStepSimulator.o : G0DumbStepSimulator.cc G0DumbStepSimulator.hh
+	$(CC) $(G0SEQ_CFLAGS) G0DumbStepSimulator.cc
+
+
+clean :
+	\rm *.o *~ g0seq

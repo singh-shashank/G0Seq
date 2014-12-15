@@ -1,0 +1,40 @@
+This program is a prototype simulation of Geant4 tracking of a particle.
+
+
+To build:
+make g0seq (or just make)
+There is a reference to include files in the Geant4 externals clhep directory, but the
+permissions should be wide open on this.
+
+To run:
+
+./g0seq -t trx5000 -f dumbstepper1.dat
+
+To dump the result into a file output.dat, use the -o flag:
+./g0seq -t trx5000 -f dumbstepper1.dat -o 
+
+
+Running requires two input files: a track file and a dumbstepper input file.
+The track file defines the tracks that are processed by this prototype. An example is
+trx5000 in this directory. It is a text file in which each line represents a track.
+A track is made up of a series of processes which can be process A, process B or process C.
+Process B has an associated integer index (explained below.)
+
+In the dumbstepper input file, each line except the first contains 13 floating point
+numbers which can be passed as input to the Runge-Kutta dumbstepper routine
+G0DumbStepSimulator::dumbStepper. This routine is extracted from Geant4 with the
+change that virtual function calls are hard-wired to use a specific concrete callback.
+The first line of the dumbstepper input file is the number of sets of input.
+The integer index associated with a process B is an index into this aray of input sets.
+If it is greater than the number of the number of input sets it is adjusted using the
+modulo operator (%).
+
+The result of running this program is an array of sets of output from the dumbstepper
+function. Each output set consists of 3 floating point numbers. There are two ways to
+record the output. One, as mentioned above, is to use the -o flag. Another is to build
+the program with the macro __VERBAL__ defined:
+$ make clean
+$ CFLAGS=-D__VERBAL__ make
+
+When built with the __VERBAL__ flag, running the program will print to stdout
+a lot of debug information, including the final result.

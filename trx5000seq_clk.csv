@@ -1,0 +1,23 @@
+Function,Module,Hardware Event Count:CPU_CLK_UNHALTED.THREAD:Self
+GetFieldValue,rkseq,3200000
+dumbStepper,rkseq,2700000
+GetFieldValue,rkseq,2200000
+GetFieldValue,rkseq,1800000
+G0DumbStepSimulator::takeStep,rkseq,1500000
+G0Track::process,rkseq,1300000
+RightHandSide,rkseq,1100000
+RightHandSide,rkseq,1000000
+G0ProcessB::doIt,rkseq,800000
+_int_free,libc-2.12.so,700000
+sleep,libc-2.12.so,600000
+G0TrackManager::processTracks,rkseq,500000
+RightHandSide,rkseq,500000
+[Outside any known module],[Unknown],300000
+G0ProcessA::doIt,rkseq,200000
+G0ProcessC::doIt,rkseq,200000
+std::_List_node_base::unhook,libstdc++.so.6.0.13,200000
+G0DumbStepSimulator::instance,rkseq,100000
+G0ProcessB::doItLevelThree,rkseq,100000
+[Import thunk operator delete],rkseq,100000
+[Import thunk sleep],rkseq,100000
+free,libc-2.12.so,100000
